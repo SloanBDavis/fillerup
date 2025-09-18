@@ -3,20 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
   const status = document.getElementById('status');
 
   fillButton.addEventListener('click', function() {
-    status.textContent = 'Identifying fields...';
+    status.textContent = 'Filling form...';
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      // send a message to the content script
-      chrome.tabs.sendMessage(tabs[0].id, {action: "identify_fields"}, function(response) {
+      chrome.tabs.sendMessage(tabs[0].id, {action: "fill_form"}, function(response) {
         if (chrome.runtime.lastError) {
-          status.textContent = "Could not connect. Try reloading the page.";
+          status.textContent = "Error. Try reloading the page.";
           console.error(chrome.runtime.lastError.message);
           return;
         }
-        if (response && response.fields) {
-          status.textContent = `Found ${response.fields.length} fields.`;
-          console.log("Fields received from content script:", response.fields);
+        if (response && response.status === "complete") {
+          status.textContent = `Successfully filled ${response.filled} fields.`;
         } else {
-          status.textContent = "No fields found.";
+          status.textContent = "Failed to fill form.";
+          console.error(response.message);
         }
       });
     });

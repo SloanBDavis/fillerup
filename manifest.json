@@ -9,7 +9,8 @@
     "scripting"
   ],
   "host_permissions": [
-    "*://*.myworkdayjobs.com/*"
+    "*://*.myworkdayjobs.com/*",
+    "https://openrouter.ai/*"
   ],
   "background": {
     "service_worker": "background.js",

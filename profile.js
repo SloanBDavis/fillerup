@@ -7,3 +7,5 @@ const userProfile = {
   linkedin: "https://www.linkedin.com/in/johndoe",
   website: "https://johndoe.dev"
 };
+
+export { userProfile }
